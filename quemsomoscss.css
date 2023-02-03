@@ -1,0 +1,202 @@
+ul{
+    list-style: none;
+    padding:0;
+}
+body{
+	margin: 0;
+	background: white;
+  	font-family: Arial, Helvetica, sans-serif;
+}
+.topo{
+	width: 100%;
+	height: 70px;
+	background: #f33926;
+}
+.logo img{
+	float: left;
+	width: 6%;
+}
+.pesquisa{
+	float:left;
+	width: 24%;
+	margin-left: 400px;
+}
+.pesquisa input{
+	margin-top: 20px;
+	width: 100%;
+	height: 25px;
+	background-color: #f33926;
+	border: 2px solid #000000;
+}
+.login{
+	float: left;
+	margin-top: 7px;
+	margin-left: 23%;
+}
+.login img{
+
+	width: 70%;
+}
+.carrinho{
+	float: left;
+	margin-top: 7px;
+	margin-left: 0%;
+}
+.carrinho img{
+
+	width: 70%;
+}
+.mini_menu{
+	background-color: black;
+	width: 100%;
+	height: 50px;
+}
+.dropbtn {
+  background-color: black;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #d3d3d3;
+}
+.produtos {
+
+	text-align: center;
+	width: 30%;
+	height: 448px;
+	border: 2px solid #000000;	
+	margin-left: 35px;
+	float: left;
+
+
+}
+.produtos img{
+	width: 70%;
+	margin-left: 0px;
+
+}
+.comp{
+	transition-duration: 0.4s;
+	color: white;
+	margin-left: 0%;
+	width: 30%;
+	background-color: #3af901;
+	padding: 16px;
+  	font-size: 16px;
+  	border: none;
+  	cursor: pointer;
+  	border-radius: 4px;
+}
+.comp:hover {
+
+  background-color: #008000; 
+  color: white;
+  border: 1px solid #000000;
+}
+
+.carr{
+	color: white;
+	width: 30%;
+	background-color: #f33926;
+	padding: 16px;
+  	font-size: 16px;
+  	border: none;
+  	cursor: pointer;
+  	border-radius: 4px;
+  	transition-duration: 0.4s;
+}
+.carr:hover{
+	background-color: #e61919; 
+  color: white;
+  	border: 1px solid #000000;	
+
+}
+	.busca button	{
+		float: left;
+/*	adicionando	imagem	*/
+background-image:	url(imagens/busca.png);
+background-repeat:	no-repeat;
+border:	none;
+/*	tamanho	da	imagem	*/
+width: 20px;
+height: 20px;
+/*	imagem	replacement	*/
+text-indent:	-9999px;
+background-color: #f33926; 
+	margin-top: 25px;
+	margin-left: 10px;
+	border-left: 2px solid black;
+  
+}
+.equipe {
+	text-align: center;
+}
+.equipe img{
+	border-radius: 5%;
+}
+.individual{
+	text-align: center;
+}
+.individual img {
+	border-radius: 50%;
+	width: 30%;
+}
+.individual a{
+	color: black;
+	
+}
+.rodape{
+	width: 100%;
+	height: 300px;
+	background-color: #f33926;
+	margin-top: 300px;
+
+}
+.rodape img{
+	width: 8%;
+
+
+}
+.cartoes img{
+	width: 30%;
+	margin-left: 34%;
+
+}
+.links{
+	margin-left: 34%;
+}
+.links a{
+	color: white;
+	text-decoration: none;
+}
