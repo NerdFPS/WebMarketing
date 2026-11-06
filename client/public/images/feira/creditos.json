@@ -1,0 +1,26 @@
+﻿[
+    {
+        "file":  "client/public/images/feira/feira.jpg",
+        "media":  "image",
+        "ref":  "openverse:00395864-85ee-40e3-9eb7-ec720e238f0d",
+        "title":  "Barraca de Frutas",
+        "creator":  "Rayelle da Silva Freitas",
+        "creatorUrl":  "https://commons.wikimedia.org/w/index.php?title=User:Rayelle_da_Silva_Freitas\u0026action=edit\u0026redlink=1",
+        "date":  null,
+        "license":  "CC BY-SA 4.0",
+        "licenseCode":  "by-sa",
+        "licenseUrl":  "https://creativecommons.org/licenses/by-sa/4.0/",
+        "creditRequired":  true,
+        "page":  "https://commons.wikimedia.org/w/index.php?curid=165874722",
+        "via":  "Wikimedia Commons",
+        "image":  "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Barraca_de_Frutas.jpg/1920px-Barraca_de_Frutas.jpg",
+        "width":  1920,
+        "height":  1440,
+        "bytes":  960359,
+        "credit":  "\"Barraca de Frutas\" by Rayelle da Silva Freitas, CC BY-SA 4.0, via Wikimedia Commons",
+        "notes":  [
+                      "Share-alike: an altered version (recoloured, combined with other pictures) must be shared under the same licence."
+                  ],
+        "saved":  "2026-11-06T05:10:46.272Z"
+    }
+]

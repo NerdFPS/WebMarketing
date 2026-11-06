@@ -1,0 +1,22 @@
+{
+  "name": "web-market",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Web Market — loja virtual de supermercado (React + Node.js + SQLite)",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c red,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "test": "npm test -w server && npm test -w client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}
