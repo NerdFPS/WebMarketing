@@ -151,6 +151,29 @@ test('estoque insuficiente desfaz o pedido inteiro', async () => {
   assert.equal((await api('GET', '/produtos/shampoo')).corpo.estoque, shampoo.estoque, 'estoque do shampoo não muda');
 });
 
+test('bloqueia o login depois de muitas senhas erradas', async () => {
+  const api = novoCliente();
+  await api('POST', '/auth/cadastro', { ...cadastro, login: 'bia', cpf: '390.533.447-05' });
+  await api('POST', '/auth/logout');
+
+  for (let i = 0; i < 5; i++) {
+    assert.equal((await api('POST', '/auth/login', { login: 'bia', senha: 'errada' + i })).status, 401);
+  }
+  const bloqueado = await api('POST', '/auth/login', { login: 'bia', senha: cadastro.senha });
+  assert.equal(bloqueado.status, 429, 'nem a senha certa passa durante o bloqueio');
+});
+
+test('limite de tentativas libera depois da janela', async () => {
+  const { criarLimiteTentativas } = await import('../src/limiteTentativas.js');
+  let relogio = 0;
+  const limite = criarLimiteTentativas({ maximo: 2, janelaMs: 1000, agora: () => relogio });
+  limite.registrarFalha('x');
+  limite.registrarFalha('x');
+  assert.ok(limite.bloqueadoPor('x') > 0);
+  relogio = 1001;
+  assert.equal(limite.bloqueadoPor('x'), 0);
+});
+
 test('rejeita escrita que não seja JSON', async () => {
   const resposta = await fetch(`${base}/auth/login`, {
     method: 'POST',

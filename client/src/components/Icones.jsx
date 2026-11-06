@@ -44,8 +44,3 @@ export const IconeLixeira = () => (
   </svg>
 );
 
-export const IconeSeta = ({ direcao = 'direita' }) => (
-  <svg {...props} style={{ transform: direcao === 'esquerda' ? 'scaleX(-1)' : undefined }}>
-    <path d="m9 18 6-6-6-6" />
-  </svg>
-);

@@ -25,6 +25,17 @@ export function carrinhoReducer(itens, acao) {
       return itens.filter((i) => i.id !== acao.id);
     case 'limpar':
       return [];
+    case 'atualizarPrecos': {
+      // Troca a cópia guardada no navegador pelos dados atuais da loja e
+      // tira do carrinho o que não existe mais.
+      const atuais = new Map(acao.produtos.map((p) => [p.id, p]));
+      return itens
+        .filter((i) => atuais.has(i.id))
+        .map((i) => {
+          const { nome, preco_centavos, imagem, slug } = atuais.get(i.id);
+          return { ...i, nome, preco_centavos, imagem, slug };
+        });
+    }
     default:
       return itens;
   }

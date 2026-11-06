@@ -54,7 +54,6 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scrollbar-gutter: stable both-edges;
 }
 
 body {
@@ -152,12 +151,6 @@ select {
   padding: 8px 12px;
 }
 
-.preco-numero {
-  font-stretch: 70%;
-  font-weight: 850;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
 
 /* ---------- Botões (retos, uma cor) ---------- */
 
@@ -629,16 +622,7 @@ select {
   max-width: 34ch;
 }
 
-.setores__foto {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
 
-.setores__credito {
-  font-size: var(--passo-pequeno);
-  color: var(--tinta-suave);
-}
 
 /* Uma única folha (a lista de compras); cada setor é uma faixa em tom mais
    escuro que abre no lugar. */
@@ -1948,9 +1932,6 @@ select {
     position: static;
   }
 
-  .setores__foto {
-    display: none;
-  }
 }
 
 @media (max-width: 720px) {

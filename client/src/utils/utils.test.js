@@ -32,6 +32,13 @@ describe('carrinho', () => {
     expect(carrinhoReducer(itens, { tipo: 'limpar' })).toEqual([]);
   });
 
+  it('atualiza preços e remove produtos que não existem mais', () => {
+    let itens = carrinhoReducer([], { tipo: 'adicionar', produto: leite, quantidade: 2 });
+    itens = carrinhoReducer(itens, { tipo: 'adicionar', produto: sabonete });
+    itens = carrinhoReducer(itens, { tipo: 'atualizarPrecos', produtos: [{ ...leite, preco_centavos: 600 }] });
+    expect(itens).toEqual([{ id: 1, slug: 'leite', nome: 'Leite', preco_centavos: 600, imagem: '/x.jpg', quantidade: 2 }]);
+  });
+
   it('não guarda o estoque no carrinho', () => {
     const [item] = carrinhoReducer([], { tipo: 'adicionar', produto: leite });
     expect(item).not.toHaveProperty('estoque');

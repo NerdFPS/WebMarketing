@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Campo from './Campo.jsx';
 import { mascaraCelular, mascaraCep, somenteDigitos } from '../utils/formatar.js';
 
@@ -17,6 +17,9 @@ async function buscarCep(cep) {
  */
 export default function CamposEndereco({ form, setForm, erros }) {
   const [buscando, setBuscando] = useState(false);
+  // Último endereço preenchido automaticamente: só trocamos o endereço se o
+  // campo estiver vazio ou ainda for esse texto (nunca o que a pessoa digitou).
+  const ultimoAutomatico = useRef('');
 
   async function mudarCep(evento) {
     const cep = mascaraCep(evento.target.value);
@@ -27,7 +30,14 @@ export default function CamposEndereco({ form, setForm, erros }) {
     setBuscando(true);
     try {
       const endereco = await buscarCep(digitos);
-      if (endereco) setForm((f) => ({ ...f, endereco: `${endereco}, nº ` }));
+      if (!endereco) return;
+      const sugerido = `${endereco}, nº `;
+      setForm((f) => {
+        const atual = f.endereco.trim();
+        if (atual && f.endereco !== ultimoAutomatico.current) return f;
+        ultimoAutomatico.current = sugerido;
+        return { ...f, endereco: sugerido };
+      });
     } catch {
       // Sem internet ou ViaCEP fora do ar: o usuário digita o endereço.
     } finally {

@@ -22,6 +22,8 @@ const hashToken = (token) => createHash('sha256').update(token).digest('hex');
 
 /** Cria uma sessão e devolve o token (só o hash fica no banco). */
 export function criarSessao(db, clienteId) {
+  // Aproveita para apagar sessões vencidas (abandonadas sem logout).
+  db.prepare('DELETE FROM sessoes WHERE expira_em < ?').run(Date.now());
   const token = randomBytes(32).toString('base64url');
   db.prepare('INSERT INTO sessoes (token_hash, cliente_id, expira_em) VALUES (?, ?, ?)')
     .run(hashToken(token), clienteId, Date.now() + DURACAO_SESSAO_MS);

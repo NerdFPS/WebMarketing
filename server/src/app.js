@@ -40,7 +40,13 @@ export function criarApp(db) {
   // Em produção, o próprio servidor entrega o React já compilado.
   if (existsSync(PASTA_CLIENT)) {
     app.use(express.static(PASTA_CLIENT));
-    app.get('/{*caminho}', (_req, res) => res.sendFile(join(PASTA_CLIENT, 'index.html')));
+    // Rotas do React (sem extensão) recebem o index.html; um arquivo que
+    // não existe (ex.: /images/x.jpg) recebe 404 de verdade.
+    app.get('/{*caminho}', (req, res, next) => {
+      if (/\.[a-z0-9]+$/i.test(req.path)) return next();
+      res.sendFile(join(PASTA_CLIENT, 'index.html'));
+    });
+    app.use((_req, res) => res.status(404).send('Arquivo não encontrado.'));
   }
 
   app.use((erro, _req, res, _next) => {

@@ -11,12 +11,18 @@ export default function Cabecalho() {
   const navegar = useNavigate();
   const { pathname } = useLocation();
   const [params] = useSearchParams();
-  const [termo, setTermo] = useState(params.get('q') ?? '');
+  const termoDaUrl = pathname === '/busca' ? (params.get('q') ?? '') : '';
+  const [termo, setTermo] = useState(termoDaUrl);
   const [menuAberto, setMenuAberto] = useState(false);
 
   useEffect(() => {
     setMenuAberto(false);
   }, [pathname]);
+
+  // Mantém a caixa de busca igual à URL (voltar/avançar, sair da busca).
+  useEffect(() => {
+    setTermo(termoDaUrl);
+  }, [termoDaUrl]);
 
   function buscar(evento) {
     evento.preventDefault();

@@ -7,6 +7,7 @@ import { useApi } from '../hooks/useApi.js';
 import CamposEndereco from '../components/CamposEndereco.jsx';
 import Estado from '../components/Estado.jsx';
 import { FORMAS_PAGAMENTO, formatarData, formatarPreco, mascaraCelular, mascaraCep, mascaraCpf } from '../utils/formatar.js';
+import LinhaRecibo from '../components/LinhaRecibo.jsx';
 
 export default function MinhaConta() {
   const { cliente, atualizar, sair, excluirConta } = useAuth();
@@ -99,13 +100,7 @@ export default function MinhaConta() {
               </summary>
               <div className="pedido__corpo">
                 {p.itens.map((i) => (
-                  <p key={i.produto_id} className="recibo__linha">
-                    <span>
-                      {i.quantidade}× {i.nome}
-                    </span>
-                    <span className="pontilhado" aria-hidden="true" />
-                    <span>{formatarPreco(i.preco_centavos * i.quantidade)}</span>
-                  </p>
+                  <LinhaRecibo key={i.produto_id} rotulo={`${i.quantidade}× ${i.nome}`} valor={formatarPreco(i.preco_centavos * i.quantidade)} />
                 ))}
                 <p className="pedido__pagamento">Pagamento: {FORMAS_PAGAMENTO[p.forma_pagamento]}</p>
               </div>

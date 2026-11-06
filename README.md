@@ -3,6 +3,18 @@
 Loja virtual de supermercado, criada como trabalho de conclusão do curso de **Informática para Internet**.
 Esta versão 2.0 é uma reescrita completa da versão original (PHP + MySQL) usando **React** no front-end e **Node.js** no back-end.
 
+## Como ficou
+
+| Página inicial | Carrinho (cupom fiscal) |
+|---|---|
+| ![Página inicial](docs/imagens/01-inicio-computador.jpg) | ![Carrinho](docs/imagens/05-carrinho.jpg) |
+
+| Setor | Produto | Minha conta |
+|---|---|---|
+| ![Setor de alimentícios](docs/imagens/03-setor-alimenticios.jpg) | ![Página de produto](docs/imagens/04-produto.jpg) | ![Minha conta](docs/imagens/08-minha-conta.jpg) |
+
+Mais capturas (celular, cadastro, quem somos) em [`docs/imagens`](docs/imagens).
+
 ## Funcionalidades
 
 - **Catálogo** com setores (Laticínios, Alimentícios, Utensílios, Higiene), página de produto e ordenação por nome ou preço

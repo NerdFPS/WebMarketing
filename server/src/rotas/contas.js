@@ -9,10 +9,11 @@ import {
   opcoesCookie,
 } from '../auth.js';
 import { validarPerfil } from '../validacao.js';
+import { criarLimiteTentativas } from '../limiteTentativas.js';
 
 const temErros = (erros) => Object.keys(erros).length > 0;
 
-export function rotasContas(db) {
+export function rotasContas(db, { limite = criarLimiteTentativas() } = {}) {
   const router = Router();
 
   router.post('/auth/cadastro', (req, res) => {
@@ -46,11 +47,22 @@ export function rotasContas(db) {
       return res.status(400).json({ erro: 'Informe login e senha.' });
     }
 
+    const chave = `${req.ip}|${login.trim().toLowerCase()}`;
+    const espera = limite.bloqueadoPor(chave);
+    if (espera > 0) {
+      res.set('Retry-After', String(espera));
+      return res
+        .status(429)
+        .json({ erro: `Muitas tentativas. Tente de novo em ${Math.ceil(espera / 60)} minuto(s).` });
+    }
+
     const cliente = db.prepare('SELECT id, senha_hash FROM clientes WHERE login = ?').get(login.trim());
     if (!cliente || !conferirSenha(senha, cliente.senha_hash)) {
+      limite.registrarFalha(chave);
       return res.status(401).json({ erro: 'Login ou senha incorretos.' });
     }
 
+    limite.zerar(chave);
     res.cookie(COOKIE_SESSAO, criarSessao(db, cliente.id), opcoesCookie());
     res.json(buscarCliente(db, cliente.id));
   });

@@ -1,6 +1,7 @@
 import { useCarrinho } from '../../context/CartContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { formatarPreco } from '../../utils/formatar.js';
+import LinhaRecibo from '../LinhaRecibo.jsx';
 
 /** Listas de compras prontas: cada uma vira um cupom que vai inteiro ao carrinho. */
 export const LISTAS = [
@@ -76,13 +77,7 @@ export default function ListasProntas({ produtos }) {
               <h3 className="cupom__titulo">{lista.nome}</h3>
               <p className="cupom__sub">{lista.para}</p>
               {lista.linhas.map(({ produto, quantidade }) => (
-                <p key={produto.id} className="cupom__linha">
-                  <span>
-                    {quantidade}× {produto.nome}
-                  </span>
-                  <span className="pontilhado" aria-hidden="true" />
-                  <span>{formatarPreco(produto.preco_centavos * quantidade)}</span>
-                </p>
+                <LinhaRecibo key={produto.id} rotulo={`${quantidade}× ${produto.nome}`} valor={formatarPreco(produto.preco_centavos * quantidade)} className="cupom__linha" />
               ))}
               <p className="cupom__total">
                 <span>Total</span>

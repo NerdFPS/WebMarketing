@@ -1,3 +1,5 @@
+import LinhaRecibo from '../LinhaRecibo.jsx';
+
 const ETAPAS = [
   {
     quando: 'No site',
@@ -57,11 +59,7 @@ export default function ComoFunciona() {
             <div key={etapa.quando}>
               <h3>{etapa.quando}</h3>
               {etapa.linhas.map(([oQue, detalhe]) => (
-                <p key={oQue} className="recibo__linha">
-                  <span>{oQue}</span>
-                  <span className="pontilhado" aria-hidden="true" />
-                  <span>{detalhe}</span>
-                </p>
+                <LinhaRecibo key={oQue} rotulo={oQue} valor={detalhe} />
               ))}
             </div>
           ))}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -8,15 +8,30 @@ import { FORMAS_PAGAMENTO, formatarPreco } from '../utils/formatar.js';
 import Estado from '../components/Estado.jsx';
 import SeletorQuantidade from '../components/SeletorQuantidade.jsx';
 import { IconeLixeira } from '../components/Icones.jsx';
+import LinhaRecibo from '../components/LinhaRecibo.jsx';
 
 export default function Carrinho() {
-  const { itens, quantidade, subtotal, alterar, remover, limpar } = useCarrinho();
+  const { itens, quantidade, subtotal, alterar, remover, limpar, atualizarPrecos } = useCarrinho();
   const { cliente } = useAuth();
   const avisar = useToast();
   const navegar = useNavigate();
   const [pagamento, setPagamento] = useState('pix');
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState('');
+
+  // O carrinho fica salvo no navegador; ao abrir, confere os preços atuais
+  // para que o total mostrado seja o mesmo que o servidor vai cobrar.
+  useEffect(() => {
+    let ativo = true;
+    api
+      .produtos()
+      .then((produtos) => ativo && atualizarPrecos(produtos))
+      .catch(() => {});
+    return () => {
+      ativo = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (itens.length === 0) {
     return (
@@ -98,19 +113,9 @@ export default function Carrinho() {
 
           <h3>Itens</h3>
           {itens.map((item) => (
-            <p key={item.id} className="recibo__linha">
-              <span>
-                {item.quantidade}× {item.nome}
-              </span>
-              <span className="pontilhado" aria-hidden="true" />
-              <span>{formatarPreco(item.preco_centavos * item.quantidade)}</span>
-            </p>
+            <LinhaRecibo key={item.id} rotulo={`${item.quantidade}× ${item.nome}`} valor={formatarPreco(item.preco_centavos * item.quantidade)} />
           ))}
-          <p className="recibo__linha">
-            <span>Frete</span>
-            <span className="pontilhado" aria-hidden="true" />
-            <span>Grátis</span>
-          </p>
+          <LinhaRecibo rotulo="Frete" valor="Grátis" />
 
           <p className="recibo__fim">
             <span>Total</span>

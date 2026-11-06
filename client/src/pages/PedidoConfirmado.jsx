@@ -1,5 +1,6 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { FORMAS_PAGAMENTO, formatarPreco } from '../utils/formatar.js';
+import LinhaRecibo from '../components/LinhaRecibo.jsx';
 
 export default function PedidoConfirmado() {
   const { id } = useParams();
@@ -21,19 +22,9 @@ export default function PedidoConfirmado() {
           </div>
           <h3>Itens</h3>
           {pedido.itens.map((i) => (
-            <p key={i.produto_id} className="recibo__linha">
-              <span>
-                {i.quantidade}× {i.nome}
-              </span>
-              <span className="pontilhado" aria-hidden="true" />
-              <span>{formatarPreco(i.preco_centavos * i.quantidade)}</span>
-            </p>
+            <LinhaRecibo key={i.produto_id} rotulo={`${i.quantidade}× ${i.nome}`} valor={formatarPreco(i.preco_centavos * i.quantidade)} />
           ))}
-          <p className="recibo__linha">
-            <span>Pagamento</span>
-            <span className="pontilhado" aria-hidden="true" />
-            <span>{FORMAS_PAGAMENTO[pedido.forma_pagamento]}</span>
-          </p>
+          <LinhaRecibo rotulo="Pagamento" valor={FORMAS_PAGAMENTO[pedido.forma_pagamento]} />
           <p className="recibo__fim">
             <span>Total</span>
             <strong>{formatarPreco(pedido.total_centavos)}</strong>

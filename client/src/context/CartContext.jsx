@@ -34,6 +34,7 @@ export function CartProvider({ children }) {
       alterar: (id, quantidade) => despachar({ tipo: 'alterar', id, quantidade }),
       remover: (id) => despachar({ tipo: 'remover', id }),
       limpar: () => despachar({ tipo: 'limpar' }),
+      atualizarPrecos: (produtos) => despachar({ tipo: 'atualizarPrecos', produtos }),
     }),
     [itens],
   );
