@@ -10,7 +10,7 @@ import SeletorQuantidade from '../components/SeletorQuantidade.jsx';
 import { IconeLixeira } from '../components/Icones.jsx';
 
 export default function Carrinho() {
-  const { itens, subtotal, alterar, remover, limpar } = useCarrinho();
+  const { itens, quantidade, subtotal, alterar, remover, limpar } = useCarrinho();
   const { cliente } = useAuth();
   const avisar = useToast();
   const navegar = useNavigate();
@@ -21,9 +21,12 @@ export default function Carrinho() {
   if (itens.length === 0) {
     return (
       <div className="container">
-        <Estado mensagem="Seu carrinho está vazio.">
+        <header className="titulo-pagina">
+          <h1>Carrinho</h1>
+        </header>
+        <Estado mensagem="Seu carrinho está vazio. Que tal começar por uma lista pronta?">
           <Link className="botao botao--primario" to="/">
-            Voltar à loja
+            Ir às compras
           </Link>
         </Estado>
       </div>
@@ -43,7 +46,7 @@ export default function Carrinho() {
         pagamento,
       );
       limpar();
-      avisar('Pedido realizado com sucesso!');
+      avisar('Pedido realizado!');
       navegar(`/pedido/${pedido.id}`, { state: { pedido } });
     } catch (e) {
       setErro(e.message);
@@ -55,15 +58,18 @@ export default function Carrinho() {
   return (
     <div className="container">
       <header className="titulo-pagina">
-        <h1>Meu carrinho</h1>
+        <h1>Carrinho</h1>
+        <p>
+          {quantidade} {quantidade === 1 ? 'item' : 'itens'} separados para você.
+        </p>
       </header>
 
       <div className="carrinho">
         <ul className="carrinho__itens">
-          {itens.map((item) => (
-            <li key={item.id} className="item-carrinho">
-              <Link to={`/produto/${item.slug}`} className="item-carrinho__foto">
-                <img src={item.imagem} alt="" />
+          {itens.map((item, i) => (
+            <li key={item.id} className="item-carrinho" data-revelar style={{ '--i': i }}>
+              <Link to={`/produto/${item.slug}`} className="item-carrinho__foto" tabIndex={-1} aria-hidden="true">
+                <img src={item.imagem} alt="" width="88" height="88" />
               </Link>
               <div className="item-carrinho__nome">
                 <Link to={`/produto/${item.slug}`}>{item.nome}</Link>
@@ -82,22 +88,34 @@ export default function Carrinho() {
           ))}
         </ul>
 
-        <aside className="resumo" aria-labelledby="titulo-resumo">
-          <h2 id="titulo-resumo">Resumo</h2>
-          <dl>
-            <div>
-              <dt>Subtotal</dt>
-              <dd>{formatarPreco(subtotal)}</dd>
-            </div>
-            <div>
-              <dt>Frete</dt>
-              <dd>Grátis</dd>
-            </div>
-            <div className="resumo__total">
-              <dt>Total</dt>
-              <dd>{formatarPreco(subtotal)}</dd>
-            </div>
-          </dl>
+        {/* O resumo é o cupom fiscal da compra */}
+        <aside className="recibo recibo--carrinho" aria-labelledby="titulo-resumo">
+          <div className="recibo__cabeca">
+            <img src="/images/logo.png" alt="" width="64" height="48" />
+            <strong id="titulo-resumo">Seu cupom</strong>
+            <span>Confira antes de finalizar</span>
+          </div>
+
+          <h3>Itens</h3>
+          {itens.map((item) => (
+            <p key={item.id} className="recibo__linha">
+              <span>
+                {item.quantidade}× {item.nome}
+              </span>
+              <span className="pontilhado" aria-hidden="true" />
+              <span>{formatarPreco(item.preco_centavos * item.quantidade)}</span>
+            </p>
+          ))}
+          <p className="recibo__linha">
+            <span>Frete</span>
+            <span className="pontilhado" aria-hidden="true" />
+            <span>Grátis</span>
+          </p>
+
+          <p className="recibo__fim">
+            <span>Total</span>
+            <strong>{formatarPreco(subtotal)}</strong>
+          </p>
 
           <fieldset className="pagamento">
             <legend>Forma de pagamento</legend>
@@ -116,17 +134,19 @@ export default function Carrinho() {
           </fieldset>
 
           {erro && (
-            <p className="alerta alerta--erro" role="alert">
+            <p className="alerta alerta--erro" role="alert" style={{ marginTop: 16 }}>
               {erro}
             </p>
           )}
 
-          <button className="botao botao--primario botao--largo" onClick={finalizar} disabled={enviando}>
-            {enviando ? 'Enviando…' : cliente ? 'Finalizar pedido' : 'Entrar para finalizar'}
-          </button>
-          <Link to="/" className="resumo__continuar">
-            Continuar comprando
-          </Link>
+          <div className="recibo__acoes">
+            <button className="botao botao--primario botao--largo" onClick={finalizar} disabled={enviando}>
+              {enviando ? 'Enviando…' : cliente ? 'Finalizar pedido' : 'Entrar para finalizar'}
+            </button>
+            <Link to="/" className="link">
+              Continuar comprando
+            </Link>
+          </div>
         </aside>
       </div>
     </div>

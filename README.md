@@ -13,6 +13,16 @@ Esta versão 2.0 é uma reescrita completa da versão original (PHP + MySQL) usa
 - **Layout responsivo** (celular, tablet e computador), acessível por teclado e leitor de tela
 - Banner rotativo com setas, indicadores e pausa ao passar o mouse
 
+## Design
+
+O site é o **material impresso de um supermercado**. A página inicial é a capa de um *encarte de ofertas*: papel branco sobre a foto de uma feira, preços em etiquetas amarelas cortadas no mesmo ângulo do logo W. O carrinho, o pedido confirmado e o "como funciona" são *cupons fiscais* com a borda serrilhada.
+
+- **Cores:** vermelho e preto da marca, amarelo de etiqueta de preço, papel branco
+- **Tipografia:** Archivo (uma só família): larga e condensada nos títulos e preços, como o logo; normal nos textos
+- **Listas prontas:** cupons como "Café da manhã" ou "Noite de TCC" vão inteiros para o carrinho com um clique
+- **Setores:** a palavra "Setores" fica fixa enquanto a lista de produtos rola ao lado
+- **Movimento:** os elementos entram suavemente ao rolar, e a foto da capa se move devagar. Quem ativa "reduzir movimento" no sistema vê tudo parado.
+
 ## Tecnologias
 
 | Parte | Tecnologia |
@@ -109,5 +119,10 @@ web-market/
 - **Sandro Henrique de Amorim Guedes** — design
 - **Vitor Elias Alves Amorim** — programação em PHP, banco de dados e documentação
 - **Igor Miguel Morais Campos** — banco de dados e documentação
+
+## Créditos
+
+- Foto da feira na capa: [“Barraca de Frutas”](https://commons.wikimedia.org/w/index.php?curid=165874722), de Rayelle da Silva Freitas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via Wikimedia Commons (o crédito também aparece no rodapé do site)
+- Fotos dos produtos, logotipo e fotos da equipe: do projeto original
 
 > Os preços e estoques são valores de demonstração.

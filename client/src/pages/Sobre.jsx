@@ -1,33 +1,31 @@
-const EQUIPE = [
-  { nome: 'Tiago de Assis Gonçalves Fernandes', foto: 'tiago.jpg', funcao: 'Design do projeto' },
-  { nome: 'Sandro Henrique de Amorim Guedes', foto: 'sandro.jpg', funcao: 'Design' },
-  { nome: 'Vitor Elias Alves Amorim', foto: 'vitor.jpg', funcao: 'Programação em PHP, banco de dados e documentação' },
-  { nome: 'Igor Miguel Morais Campos', foto: 'igor.jpg', funcao: 'Banco de dados e documentação' },
-];
+import CartaEquipe from '../components/inicio/CartaEquipe.jsx';
+import { EQUIPE } from '../equipe.js';
 
 export default function Sobre() {
   return (
-    <div className="container">
-      <header className="titulo-pagina">
-        <h1>Quem somos</h1>
-        <p>
-          O Web Market nasceu como trabalho de conclusão do curso de Informática para Internet: um supermercado
-          online onde você escolhe seus produtos por setor, monta o carrinho e recebe tudo em casa.
-        </p>
-      </header>
+    <>
+      <div className="container">
+        <header className="titulo-pagina titulo-pagina--gigante">
+          <h1 data-revelar>Quem somos</h1>
+          <p data-revelar style={{ '--i': 1 }}>
+            Um supermercado online criado como trabalho de conclusão do curso de Informática para Internet: você
+            escolhe por setor, monta o carrinho e recebe tudo em casa.
+          </p>
+        </header>
 
-      <section aria-labelledby="titulo-equipe">
-        <h2 id="titulo-equipe">Nossa equipe</h2>
-        <ul className="equipe">
-          {EQUIPE.map((pessoa) => (
-            <li key={pessoa.nome} className="membro">
-              <img src={`/images/equipe/${pessoa.foto}`} alt={`Foto de ${pessoa.nome}`} loading="lazy" />
-              <h3>{pessoa.nome}</h3>
-              <p>{pessoa.funcao}</p>
+        <ul className="equipe" aria-label="Nossa equipe" style={{ marginTop: 24, marginBottom: 'var(--secao)' }}>
+          {EQUIPE.map((pessoa, i) => (
+            <li key={pessoa.nome} className="membro" data-revelar style={{ '--i': i }}>
+              <img src={`/images/equipe/${pessoa.foto}`} alt={`Foto de ${pessoa.nome}`} width="400" height="500" loading="lazy" />
+              <div>
+                <h3>{pessoa.nome}</h3>
+                <p>{pessoa.funcao}</p>
+              </div>
             </li>
           ))}
         </ul>
-      </section>
-    </div>
+      </div>
+      <CartaEquipe />
+    </>
   );
 }

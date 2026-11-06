@@ -5,9 +5,9 @@ import { useApi } from '../hooks/useApi.js';
 import { useCarrinho } from '../context/CartContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import { nomeCategoria } from '../categorias.js';
-import { formatarPreco } from '../utils/formatar.js';
 import { MAX_POR_ITEM } from '../utils/carrinho.js';
 import Estado from '../components/Estado.jsx';
+import EtiquetaPreco from '../components/EtiquetaPreco.jsx';
 import SeletorQuantidade from '../components/SeletorQuantidade.jsx';
 
 export default function Produto() {
@@ -17,7 +17,13 @@ export default function Produto() {
   const avisar = useToast();
   const [quantidade, setQuantidade] = useState(1);
 
-  if (carregando) return <Estado tipo="carregando" />;
+  if (carregando) {
+    return (
+      <div className="container">
+        <Estado tipo="carregando" />
+      </div>
+    );
+  }
   if (erro) {
     return (
       <div className="container">
@@ -41,14 +47,14 @@ export default function Produto() {
       </nav>
 
       <article className="produto">
-        <div className="produto__imagem">
-          <img src={produto.imagem} alt={produto.nome} />
+        <div className="produto__imagem" data-revelar>
+          <img src={produto.imagem} alt={produto.nome} width="560" height="560" />
         </div>
-        <div className="produto__info">
-          <span className="cartao-produto__marca">{produto.marca}</span>
+        <div className="produto__info" data-revelar style={{ '--i': 1 }}>
           <h1>{produto.nome}</h1>
+          <p className="produto__marca">{produto.marca}</p>
           <p className="produto__descricao">{produto.descricao}</p>
-          <p className="preco preco--grande">{formatarPreco(produto.preco_centavos)}</p>
+          <EtiquetaPreco centavos={produto.preco_centavos} grande />
           <p className={`estoque ${esgotado ? 'estoque--zero' : ''}`}>
             {esgotado ? 'Produto esgotado' : `${produto.estoque} em estoque`}
           </p>

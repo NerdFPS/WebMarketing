@@ -7,27 +7,48 @@ export default function PedidoConfirmado() {
 
   return (
     <div className="container estreito">
-      <section className="confirmacao">
-        <div className="confirmacao__icone" aria-hidden="true">
-          ✓
-        </div>
-        <h1>Pedido nº {id} recebido!</h1>
-        {pedido && (
-          <p>
-            Total de <strong>{formatarPreco(pedido.total_centavos)}</strong> via{' '}
-            {FORMAS_PAGAMENTO[pedido.forma_pagamento]}.
+      <header className="titulo-pagina">
+        <h1>Pedido nº {id} recebido</h1>
+        <p>Obrigado pela compra! Você pode acompanhar o pedido em Minha conta.</p>
+      </header>
+
+      {pedido && (
+        <div className="recibo" data-revelar>
+          <div className="recibo__cabeca">
+            <img src="/images/logo.png" alt="" width="64" height="48" />
+            <strong>Web Market</strong>
+            <span>Pedido nº {pedido.id}</span>
+          </div>
+          <h3>Itens</h3>
+          {pedido.itens.map((i) => (
+            <p key={i.produto_id} className="recibo__linha">
+              <span>
+                {i.quantidade}× {i.nome}
+              </span>
+              <span className="pontilhado" aria-hidden="true" />
+              <span>{formatarPreco(i.preco_centavos * i.quantidade)}</span>
+            </p>
+          ))}
+          <p className="recibo__linha">
+            <span>Pagamento</span>
+            <span className="pontilhado" aria-hidden="true" />
+            <span>{FORMAS_PAGAMENTO[pedido.forma_pagamento]}</span>
           </p>
-        )}
-        <p>Você pode acompanhar seus pedidos em Minha conta.</p>
-        <div className="confirmacao__acoes">
-          <Link className="botao botao--primario" to="/minha-conta">
-            Ver meus pedidos
-          </Link>
-          <Link className="botao" to="/">
-            Continuar comprando
-          </Link>
+          <p className="recibo__fim">
+            <span>Total</span>
+            <strong>{formatarPreco(pedido.total_centavos)}</strong>
+          </p>
         </div>
-      </section>
+      )}
+
+      <div className="confirmacao__acoes">
+        <Link className="botao botao--primario" to="/minha-conta">
+          Ver meus pedidos
+        </Link>
+        <Link className="botao botao--claro" to="/">
+          Continuar comprando
+        </Link>
+      </div>
     </div>
   );
 }

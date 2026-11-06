@@ -78,7 +78,7 @@ export default function MinhaConta() {
           <button className="botao botao--primario" disabled={salvando}>
             {salvando ? 'Salvando…' : 'Salvar alterações'}
           </button>
-          <hr />
+          <div className="formulario__separador" aria-hidden="true" />
           <button type="button" className="botao botao--perigo" onClick={excluir}>
             Excluir minha conta
           </button>
@@ -94,17 +94,21 @@ export default function MinhaConta() {
               <summary>
                 <span>Pedido nº {p.id}</span>
                 <span>{formatarData(p.criado_em)}</span>
-                <span className="etiqueta">{p.status}</span>
+                <span className="status">{p.status}</span>
                 <strong>{formatarPreco(p.total_centavos)}</strong>
               </summary>
-              <ul>
+              <div className="pedido__corpo">
                 {p.itens.map((i) => (
-                  <li key={i.produto_id}>
-                    {i.quantidade}× {i.nome} — {formatarPreco(i.preco_centavos * i.quantidade)}
-                  </li>
+                  <p key={i.produto_id} className="recibo__linha">
+                    <span>
+                      {i.quantidade}× {i.nome}
+                    </span>
+                    <span className="pontilhado" aria-hidden="true" />
+                    <span>{formatarPreco(i.preco_centavos * i.quantidade)}</span>
+                  </p>
                 ))}
-              </ul>
-              <p className="pedido__pagamento">Pagamento: {FORMAS_PAGAMENTO[p.forma_pagamento]}</p>
+                <p className="pedido__pagamento">Pagamento: {FORMAS_PAGAMENTO[p.forma_pagamento]}</p>
+              </div>
             </details>
           ))}
         </section>

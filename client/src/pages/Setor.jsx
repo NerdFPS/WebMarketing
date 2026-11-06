@@ -10,11 +10,13 @@ export default function Setor() {
 
   return (
     <div className="container">
-      <header className="titulo-pagina">
-        <h1>{setor.nome}</h1>
-        <p>{setor.descricao}</p>
+      <header className="titulo-pagina titulo-pagina--gigante">
+        <h1 data-revelar>{setor.nome}</h1>
+        <p data-revelar style={{ '--i': 1 }}>
+          {setor.descricao}
+        </p>
       </header>
-      <ListaProdutos titulo="Produtos" categoria={setor.slug} vazio="Nenhum produto neste setor por enquanto." />
+      <ListaProdutos titulo="Produtos do setor" categoria={setor.slug} vazio="Nenhum produto neste setor por enquanto." />
     </div>
   );
 }

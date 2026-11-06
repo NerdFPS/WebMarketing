@@ -1,26 +1,27 @@
-import { Link } from 'react-router-dom';
-import Banner from '../components/Banner.jsx';
-import ListaProdutos from '../components/ListaProdutos.jsx';
-import { CATEGORIAS } from '../categorias.js';
+import { api } from '../api.js';
+import { useApi } from '../hooks/useApi.js';
+import Capa from '../components/inicio/Capa.jsx';
+import Setores from '../components/inicio/Setores.jsx';
+import ListasProntas from '../components/inicio/ListasProntas.jsx';
+import ComoFunciona from '../components/inicio/ComoFunciona.jsx';
+import CartaEquipe from '../components/inicio/CartaEquipe.jsx';
+import Estado from '../components/Estado.jsx';
 
 export default function Inicio() {
+  const { dados: produtos, erro } = useApi(() => api.produtos({ ordenar: 'nome' }), []);
+
   return (
     <>
-      <Banner />
-      <div className="container">
-        <section className="setores" aria-labelledby="titulo-setores">
-          <h2 id="titulo-setores">Compre por setor</h2>
-          <div className="setores__grade">
-            {CATEGORIAS.map((c) => (
-              <Link key={c.slug} to={`/setor/${c.slug}`} className={`setor setor--${c.slug}`}>
-                <strong>{c.nome}</strong>
-                <span>{c.descricao}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-        <ListaProdutos titulo="Todos os produtos" />
-      </div>
+      <Capa produtos={produtos} />
+      {erro && (
+        <div className="container">
+          <Estado tipo="erro" mensagem={erro.message} />
+        </div>
+      )}
+      <Setores produtos={produtos} />
+      <ListasProntas produtos={produtos} />
+      <ComoFunciona />
+      <CartaEquipe />
     </>
   );
 }

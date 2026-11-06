@@ -47,8 +47,8 @@ export default function ListaProdutos({ titulo, categoria, q, vazio = 'Nenhum pr
       {produtos && produtos.length === 0 && <Estado mensagem={vazio} />}
       {produtos && produtos.length > 0 && (
         <div className="grade-produtos">
-          {produtos.map((p) => (
-            <CartaoProduto key={p.id} produto={p} />
+          {produtos.map((p, i) => (
+            <CartaoProduto key={p.id} produto={p} indice={i} />
           ))}
         </div>
       )}
